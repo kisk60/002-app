@@ -1,0 +1,204 @@
+:root {
+  --bg: #f5f7ff;
+  --panel: #ffffff;
+  --line: #d4dbf5;
+  --primary: #4f46e5;
+  --primary-soft: #eef2ff;
+  --accent: #ec4899;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --danger: #ef4444;
+  --success: #10b981;
+  --cell-size: 42px;
+  --clue-size: 44px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+  font-family: "Segoe UI", "Hiragino Sans", "Meiryo UI", sans-serif;
+  color: var(--text);
+}
+
+.app {
+  width: min(94vw, 900px);
+  background: var(--panel);
+  border: 1px solid rgba(79, 70, 229, 0.08);
+  border-radius: 24px;
+  padding: 28px 22px 18px;
+  box-shadow: 0 18px 40px rgba(79, 70, 229, 0.08);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  appearance: none;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+  padding: 10px 16px;
+  font-size: 0.96rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button.secondary {
+  background: #e5e7eb;
+  color: var(--text);
+}
+
+.rule-box {
+  margin: 12px 0 18px;
+  padding: 12px 14px;
+  background: var(--primary-soft);
+  border: 1px solid rgba(79, 70, 229, 0.08);
+  border-radius: 12px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.board-shell {
+  overflow-x: auto;
+  padding: 8px 2px 4px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: var(--clue-size) repeat(8, var(--cell-size));
+  width: max-content;
+  margin: 0 auto;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  padding: 8px;
+  gap: 4px;
+}
+
+.cell, .clue {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.clue {
+  width: var(--clue-size);
+  height: var(--clue-size);
+  font-weight: 700;
+  color: var(--muted);
+  background: #f3f4f6;
+  border: 1px solid var(--line);
+}
+
+.clue.top {
+  width: var(--cell-size);
+  height: var(--clue-size);
+}
+
+.cell {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+}
+
+.cell:focus {
+  outline: 3px solid rgba(79, 70, 229, 0.2);
+  outline-offset: 1px;
+}
+
+.cell.fixed {
+  background: #eef2ff;
+  color: var(--primary);
+  border-color: rgba(79, 70, 229, 0.3);
+}
+
+.cell.mismatch {
+  background: #fef2f2;
+  border-color: rgba(239, 68, 68, 0.5);
+  color: var(--danger);
+}
+
+.cell.success {
+  background: #ecfdf5;
+  border-color: rgba(16, 185, 129, 0.5);
+  color: var(--success);
+}
+
+.message {
+  margin: 18px 0 0;
+  min-height: 1.5em;
+  text-align: center;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --cell-size: 34px;
+    --clue-size: 36px;
+  }
+
+  .app {
+    padding: 18px 12px 12px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

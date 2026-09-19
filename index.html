@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>足し算クロス</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">MVP</p>
+          <h1>足し算クロス</h1>
+        </div>
+        <div class="actions">
+          <button id="new-puzzle-btn" type="button">問題を再作成</button>
+          <button id="reset-btn" class="secondary" type="button">やり直し</button>
+        </div>
+      </header>
+
+      <section class="rule-box">
+        <strong>ルール:</strong>
+        各マスに1〜9の数字を入れて、各行と各列の合計が表示の数字になるように完成させてください。
+      </section>
+
+      <div class="board-shell">
+        <div id="board" class="board" aria-label="足し算クロスの盤面"></div>
+      </div>
+
+      <p id="message" class="message" aria-live="polite">空いているマスを埋めてください</p>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
