@@ -109,6 +109,12 @@ button:focus-visible {
   padding: 8px 2px 4px;
 }
 
+.check-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
 .board {
   display: grid;
   grid-template-columns: var(--clue-size) repeat(6, var(--cell-size));
