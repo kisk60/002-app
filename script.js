@@ -4,9 +4,11 @@ const boardEl = document.getElementById('board');
 const messageEl = document.getElementById('message');
 const newPuzzleBtn = document.getElementById('new-puzzle-btn');
 const resetBtn = document.getElementById('reset-btn');
+const checkAnswerBtn = document.getElementById('check-answer-btn');
 
 let currentPuzzle = null;
 let currentBoard = [];
+let checkedCells = new Map();
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -88,14 +90,57 @@ function createPuzzle() {
     initialBoard,
   };
   currentBoard = initialBoard.map((row) => [...row]);
+  checkedCells = new Map();
   renderBoard();
   updateMessage();
 }
 
 function resetBoard() {
   currentBoard = currentPuzzle.initialBoard.map((row) => [...row]);
+  checkedCells = new Map();
   renderBoard();
   updateMessage();
+}
+
+function checkAnswer() {
+  const enteredCells = [];
+  let hasIncorrectAnswer = false;
+
+  currentBoard.forEach((row, rowIndex) => {
+    row.forEach((value, colIndex) => {
+      if (value === '' || hasInitialValue(rowIndex, colIndex)) {
+        return;
+      }
+
+      const isCorrect = value === String(currentPuzzle.solution[rowIndex][colIndex]);
+      checkedCells.set(`${rowIndex}-${colIndex}`, isCorrect);
+      enteredCells.push(isCorrect);
+      hasIncorrectAnswer = hasIncorrectAnswer || !isCorrect;
+    });
+  });
+
+  if (enteredCells.length === 0) {
+    messageEl.textContent = '回答を入力してからチェックしてください。';
+    messageEl.className = 'message error';
+    return;
+  }
+
+  renderBoard();
+
+  if (hasIncorrectAnswer) {
+    messageEl.textContent = '間違っているマスがあります。赤いマスを見直してください。';
+    messageEl.className = 'message error';
+    return;
+  }
+
+  if (isBoardSolved()) {
+    messageEl.textContent = 'クリア！ すべての回答が正しいです。';
+    messageEl.className = 'message success';
+    return;
+  }
+
+  messageEl.textContent = 'ここまでの回答はすべて正しいです。残りのマスも入力してください。';
+  messageEl.className = 'message success';
 }
 
 function isBoardSolved() {
@@ -189,6 +234,12 @@ function renderBoard() {
       cell.inputMode = 'numeric';
       cell.pattern = '[1-9]';
       cell.className = 'cell';
+      const checkResult = checkedCells.get(`${rowIndex}-${colIndex}`);
+      if (checkResult === true) {
+        cell.classList.add('success');
+      } else if (checkResult === false) {
+        cell.classList.add('mismatch');
+      }
       cell.value = value;
       cell.setAttribute('aria-label', `行${rowIndex + 1}列${colIndex + 1}`);
 
@@ -203,6 +254,7 @@ function renderBoard() {
           const nextValue = sanitizeInput(event.target.value);
           event.target.value = nextValue;
           currentBoard[rowIndex][colIndex] = nextValue;
+          checkedCells.delete(`${rowIndex}-${colIndex}`);
           renderBoard();
           updateMessage();
         });
@@ -219,6 +271,10 @@ newPuzzleBtn.addEventListener('click', () => {
 
 resetBtn.addEventListener('click', () => {
   resetBoard();
+});
+
+checkAnswerBtn.addEventListener('click', () => {
+  checkAnswer();
 });
 
 createPuzzle();

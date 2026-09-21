@@ -89,6 +89,11 @@ button.secondary {
   color: var(--text);
 }
 
+button:focus-visible {
+  outline: 3px solid rgba(79, 70, 229, 0.25);
+  outline-offset: 2px;
+}
+
 .rule-box {
   margin: 12px 0 18px;
   padding: 12px 14px;
