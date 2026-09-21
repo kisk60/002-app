@@ -1,4 +1,4 @@
-const BOARD_SIZE = 8;
+const BOARD_SIZE = 6;
 
 const boardEl = document.getElementById('board');
 const messageEl = document.getElementById('message');

@@ -106,7 +106,7 @@ button.secondary {
 
 .board {
   display: grid;
-  grid-template-columns: var(--clue-size) repeat(8, var(--cell-size));
+  grid-template-columns: var(--clue-size) repeat(6, var(--cell-size));
   width: max-content;
   margin: 0 auto;
   background: #fff;
