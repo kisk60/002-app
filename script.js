@@ -51,6 +51,16 @@ function sanitizeInput(value) {
   return digit || '';
 }
 
+function isAllowedKey(event) {
+  return (
+    event.ctrlKey ||
+    event.metaKey ||
+    event.altKey ||
+    ['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key) ||
+    /^[1-6]$/.test(event.key)
+  );
+}
+
 function createPuzzle() {
   const solution = buildSolvedBoard();
   const rowTargets = solution.map((row) => row.reduce((sum, value) => sum + value, 0));
@@ -233,6 +243,7 @@ function renderBoard() {
       cell.maxLength = 1;
       cell.inputMode = 'numeric';
       cell.pattern = '[1-6]';
+      cell.title = '1〜6の数字を入力してください';
       cell.className = 'cell';
       const checkResult = checkedCells.get(`${rowIndex}-${colIndex}`);
       if (checkResult === true) {
@@ -250,6 +261,11 @@ function renderBoard() {
       }
 
       if (!fixed) {
+        cell.addEventListener('keydown', (event) => {
+          if (!isAllowedKey(event)) {
+            event.preventDefault();
+          }
+        });
         cell.addEventListener('input', (event) => {
           const nextValue = sanitizeInput(event.target.value);
           event.target.value = nextValue;
