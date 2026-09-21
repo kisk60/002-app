@@ -16,7 +16,7 @@ function randomInt(min, max) {
 
 function buildSolvedBoard() {
   return Array.from({ length: BOARD_SIZE }, () =>
-    Array.from({ length: BOARD_SIZE }, () => randomInt(1, 9))
+    Array.from({ length: BOARD_SIZE }, () => randomInt(1, 6))
   );
 }
 
@@ -47,7 +47,7 @@ function sanitizeInput(value) {
   if (typeof value !== 'string') {
     return '';
   }
-  const digit = value.replace(/[^1-9]/g, '').slice(0, 1);
+  const digit = value.replace(/[^1-6]/g, '').slice(0, 1);
   return digit || '';
 }
 
@@ -232,7 +232,7 @@ function renderBoard() {
       cell.type = 'text';
       cell.maxLength = 1;
       cell.inputMode = 'numeric';
-      cell.pattern = '[1-9]';
+      cell.pattern = '[1-6]';
       cell.className = 'cell';
       const checkResult = checkedCells.get(`${rowIndex}-${colIndex}`);
       if (checkResult === true) {
